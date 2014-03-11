@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -28,19 +29,16 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class UserTaskJsonConverter extends BaseBpmnJsonConverter {
 
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, UserTaskJsonConverter> convertersToBpmnMap = new HashMap<String, UserTaskJsonConverter>(1);
+    convertersToBpmnMap.put(STENCIL_TASK_USER, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_TASK_USER, UserTaskJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(UserTask.class, UserTaskJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, UserTaskJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, UserTaskJsonConverter>(1);
+    convertersToJsonMap.put(UserTask.class, this);
+    return convertersToJsonMap;
   }
   
   @Override

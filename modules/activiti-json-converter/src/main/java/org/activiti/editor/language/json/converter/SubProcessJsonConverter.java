@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
@@ -26,20 +27,17 @@ import org.codehaus.jackson.node.ObjectNode;
  * @author Tijs Rademakers
  */
 public class SubProcessJsonConverter extends BaseBpmnJsonConverter {
-  
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, SubProcessJsonConverter> convertersToBpmnMap = new HashMap<String, SubProcessJsonConverter>(1);
+    convertersToBpmnMap.put(STENCIL_SUB_PROCESS, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_SUB_PROCESS, SubProcessJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(SubProcess.class, SubProcessJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, SubProcessJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, SubProcessJsonConverter>(1);
+    convertersToJsonMap.put(SubProcess.class, this);
+    return convertersToJsonMap;
   }
   
   protected String getStencilId(FlowElement flowElement) {

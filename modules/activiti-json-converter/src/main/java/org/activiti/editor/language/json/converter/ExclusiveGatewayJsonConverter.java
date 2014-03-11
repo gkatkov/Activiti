@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
@@ -25,19 +26,16 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class ExclusiveGatewayJsonConverter extends BaseBpmnJsonConverter {
 
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, ExclusiveGatewayJsonConverter> convertersToBpmnMap = new HashMap<String, ExclusiveGatewayJsonConverter>(1);
+    convertersToBpmnMap.put(STENCIL_GATEWAY_EXCLUSIVE, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_GATEWAY_EXCLUSIVE, ExclusiveGatewayJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ExclusiveGateway.class, ExclusiveGatewayJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, ExclusiveGatewayJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, ExclusiveGatewayJsonConverter>(1);
+    convertersToJsonMap.put(ExclusiveGateway.class, this);
+    return convertersToJsonMap;
   }
   
   protected String getStencilId(FlowElement flowElement) {

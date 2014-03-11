@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
@@ -29,19 +30,16 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
 
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, SequenceFlowJsonConverter> convertersToBpmnMap = new HashMap<String, SequenceFlowJsonConverter>(1);
+    convertersToBpmnMap.put(STENCIL_SEQUENCE_FLOW, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_SEQUENCE_FLOW, SequenceFlowJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(SequenceFlow.class, SequenceFlowJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, SequenceFlowJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, SequenceFlowJsonConverter>(1);
+    convertersToJsonMap.put(SequenceFlow.class, this);
+    return convertersToJsonMap;
   }
   
   @Override

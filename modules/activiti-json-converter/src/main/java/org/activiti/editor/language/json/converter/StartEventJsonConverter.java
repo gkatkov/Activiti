@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.activiti.bpmn.model.BaseElement;
@@ -31,23 +32,20 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class StartEventJsonConverter extends BaseBpmnJsonConverter {
 
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, StartEventJsonConverter> convertersToBpmnMap = new HashMap<String, StartEventJsonConverter>(5);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_NONE, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_TIMER, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_ERROR, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_MESSAGE, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_SIGNAL, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_EVENT_START_NONE, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_TIMER, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_ERROR, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_MESSAGE, StartEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_SIGNAL, StartEventJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(StartEvent.class, StartEventJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, StartEventJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, StartEventJsonConverter>(1);
+    convertersToJsonMap.put(StartEvent.class, this);
+    return convertersToJsonMap;
   }
   
   protected String getStencilId(FlowElement flowElement) {

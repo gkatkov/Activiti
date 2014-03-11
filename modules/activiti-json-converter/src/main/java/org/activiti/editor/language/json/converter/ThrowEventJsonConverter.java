@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,21 +28,18 @@ import org.codehaus.jackson.node.ObjectNode;
  * @author Tijs Rademakers
  */
 public class ThrowEventJsonConverter extends BaseBpmnJsonConverter {
-  
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, ThrowEventJsonConverter> convertersToBpmnMap = new HashMap<String, ThrowEventJsonConverter>(2);
+    convertersToBpmnMap.put(STENCIL_EVENT_THROW_NONE, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_THROW_SIGNAL, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_EVENT_THROW_NONE, ThrowEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_THROW_SIGNAL, ThrowEventJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(ThrowEvent.class, ThrowEventJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, ThrowEventJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, ThrowEventJsonConverter>(1);
+    convertersToJsonMap.put(ThrowEvent.class, this);
+    return convertersToJsonMap;
   }
   
   protected String getStencilId(FlowElement flowElement) {

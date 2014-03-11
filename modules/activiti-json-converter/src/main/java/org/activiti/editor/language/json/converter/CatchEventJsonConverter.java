@@ -12,6 +12,7 @@
  */
 package org.activiti.editor.language.json.converter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,22 +29,19 @@ import org.codehaus.jackson.node.ObjectNode;
  * @author Tijs Rademakers
  */
 public class CatchEventJsonConverter extends BaseBpmnJsonConverter {
-  
-  public static void fillTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap,
-      Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    
-    fillJsonTypes(convertersToBpmnMap);
-    fillBpmnTypes(convertersToJsonMap);
+
+  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
+    Map<String, CatchEventJsonConverter> convertersToBpmnMap = new HashMap<String, CatchEventJsonConverter>(3);
+    convertersToBpmnMap.put(STENCIL_EVENT_CATCH_TIMER, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_CATCH_MESSAGE, this);
+    convertersToBpmnMap.put(STENCIL_EVENT_CATCH_SIGNAL, this);
+    return convertersToBpmnMap;
   }
-  
-  public static void fillJsonTypes(Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap) {
-    convertersToBpmnMap.put(STENCIL_EVENT_CATCH_TIMER, CatchEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_CATCH_MESSAGE, CatchEventJsonConverter.class);
-    convertersToBpmnMap.put(STENCIL_EVENT_CATCH_SIGNAL, CatchEventJsonConverter.class);
-  }
-  
-  public static void fillBpmnTypes(Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap) {
-    convertersToJsonMap.put(IntermediateCatchEvent.class, CatchEventJsonConverter.class);
+
+  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, CatchEventJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, CatchEventJsonConverter>(1);
+    convertersToJsonMap.put(IntermediateCatchEvent.class, this);
+    return convertersToJsonMap;
   }
   
   protected String getStencilId(FlowElement flowElement) {
