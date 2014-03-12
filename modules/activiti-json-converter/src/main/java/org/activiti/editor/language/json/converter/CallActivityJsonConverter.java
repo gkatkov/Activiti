@@ -31,15 +31,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, CallActivityJsonConverter> convertersToBpmnMap = new HashMap<String, CallActivityJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_CALL_ACTIVITY, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_CALL_ACTIVITY, CallActivityJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, CallActivityJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, CallActivityJsonConverter>(1);
-    convertersToJsonMap.put(CallActivity.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(CallActivity.class, CallActivityJsonConverter.class);
     return convertersToJsonMap;
   }
   

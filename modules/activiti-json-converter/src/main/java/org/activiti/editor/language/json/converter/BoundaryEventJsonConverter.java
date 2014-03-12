@@ -32,17 +32,17 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class BoundaryEventJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, BoundaryEventJsonConverter> convertersToBpmnMap = new HashMap<String, BoundaryEventJsonConverter>(3);
-    convertersToBpmnMap.put(STENCIL_EVENT_BOUNDARY_TIMER, this);
-    convertersToBpmnMap.put(STENCIL_EVENT_BOUNDARY_ERROR, this);
-    convertersToBpmnMap.put(STENCIL_EVENT_BOUNDARY_SIGNAL, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(3);
+    convertersToBpmnMap.put(STENCIL_EVENT_BOUNDARY_TIMER, BoundaryEventJsonConverter.class);
+    convertersToBpmnMap.put(STENCIL_EVENT_BOUNDARY_ERROR, BoundaryEventJsonConverter.class);
+    convertersToBpmnMap.put(STENCIL_EVENT_BOUNDARY_SIGNAL, BoundaryEventJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, BoundaryEventJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, BoundaryEventJsonConverter>(1);
-    convertersToJsonMap.put(BoundaryEvent.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(BoundaryEvent.class, BoundaryEventJsonConverter.class);
     return convertersToJsonMap;
   }
   

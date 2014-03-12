@@ -26,15 +26,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class ExclusiveGatewayJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, ExclusiveGatewayJsonConverter> convertersToBpmnMap = new HashMap<String, ExclusiveGatewayJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_GATEWAY_EXCLUSIVE, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_GATEWAY_EXCLUSIVE, ExclusiveGatewayJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, ExclusiveGatewayJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, ExclusiveGatewayJsonConverter>(1);
-    convertersToJsonMap.put(ExclusiveGateway.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(ExclusiveGateway.class, ExclusiveGatewayJsonConverter.class);
     return convertersToJsonMap;
   }
   

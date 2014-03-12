@@ -26,15 +26,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class ParallelGatewayJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, ParallelGatewayJsonConverter> convertersToBpmnMap = new HashMap<String, ParallelGatewayJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_GATEWAY_PARALLEL, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_GATEWAY_PARALLEL, ParallelGatewayJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, ParallelGatewayJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, ParallelGatewayJsonConverter>(1);
-    convertersToJsonMap.put(ParallelGateway.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(ParallelGateway.class, ParallelGatewayJsonConverter.class);
     return convertersToJsonMap;
   }
   

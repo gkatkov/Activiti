@@ -58,7 +58,6 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
   protected static final Logger LOGGER = LoggerFactory.getLogger(BpmnJsonConverter.class);
   
   protected ObjectMapper objectMapper = new ObjectMapper();
-  protected final List<BaseBpmnJsonConverter> convertersToJson;
 
   protected static List<Class<? extends BaseBpmnJsonConverter>> convertersToJsonDefault = new ArrayList<Class<? extends BaseBpmnJsonConverter>>(){
     {
@@ -100,11 +99,26 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
     }
   };
 
-  protected Map<Class<? extends BaseElement>, BaseBpmnJsonConverter> convertersToJsonMap =
-          new HashMap<Class<? extends BaseElement>, BaseBpmnJsonConverter>();
+  protected final Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap;
+  protected final Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap;
 
-  protected Map<String, BaseBpmnJsonConverter> convertersToBpmnMap =
-          new HashMap<String, BaseBpmnJsonConverter>();
+  protected static Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMapDefault =
+          new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>();
+
+  protected static Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMapDefault =
+          new HashMap<String, Class<? extends BaseBpmnJsonConverter>>();
+
+  static {
+    for(Class<? extends BaseBpmnJsonConverter> converterClass : convertersToJsonDefault) {
+      try {
+        BaseBpmnJsonConverter converter = converterClass.newInstance();
+        convertersToJsonMapDefault.putAll(converter.getBpmnTypes());
+        convertersToBpmnMapDefault.putAll(converter.getJsonTypes());
+      } catch (Exception e) {
+        LOGGER.error("Error instantiating converter {}", converterClass.getName(), e);
+      }
+    }
+  }
   
   private static final List<String> DI_CIRCLES = new ArrayList<String>();
   private static final List<String> DI_RECTANGLES = new ArrayList<String>();
@@ -148,16 +162,16 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
   }
 
   public BpmnJsonConverter() {
-    this(convertersToJsonDefault);
+    convertersToJsonMap = convertersToJsonMapDefault;
+    convertersToBpmnMap = convertersToBpmnMapDefault;
   }
 
   public BpmnJsonConverter(List<Class<? extends BaseBpmnJsonConverter>> convertersToJson) {
-    this.convertersToJson = new ArrayList<BaseBpmnJsonConverter>();
-
-    for(Class<? extends BaseBpmnJsonConverter> converterClass : convertersToJsonDefault) {
+    convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>();
+    convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>();
+    for(Class<? extends BaseBpmnJsonConverter> converterClass : convertersToJson) {
       try {
         BaseBpmnJsonConverter converter = converterClass.newInstance();
-        this.convertersToJson.add(converter);
         convertersToJsonMap.putAll(converter.getBpmnTypes());
         convertersToBpmnMap.putAll(converter.getJsonTypes());
       } catch (Exception e) {
@@ -250,10 +264,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
             
             for (FlowElement flowElement : process.getFlowElements()) {
               if (lane.getFlowReferences().contains(flowElement.getId())) {
-                BaseBpmnJsonConverter converter = convertersToJsonMap.get(flowElement.getClass());
+                Class<? extends BaseBpmnJsonConverter> converter = convertersToJsonMap.get(flowElement.getClass());
                 if (converter != null) {
                   try {
-                    converter.convertToJson(flowElement, this, model, elementShapesArrayNode,
+                    converter.newInstance().convertToJson(flowElement, this, model, elementShapesArrayNode,
                         laneGraphicInfo.getX(), laneGraphicInfo.getY());
                   } catch (Exception e) {
                     LOGGER.error("Error converting {}", flowElement, e);
@@ -278,10 +292,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       double subProcessX, double subProcessY) {
     
     for (FlowElement flowElement : flowElements) {
-      BaseBpmnJsonConverter converter = convertersToJsonMap.get(flowElement.getClass());
+      Class<? extends BaseBpmnJsonConverter> converter = convertersToJsonMap.get(flowElement.getClass());
       if (converter != null) {
         try {
-          converter.convertToJson(flowElement, this, model, shapesArrayNode,
+          converter.newInstance().convertToJson(flowElement, this, model, shapesArrayNode,
               subProcessX, subProcessY);
         } catch (Exception e) {
           LOGGER.error("Error converting {}", flowElement, e);
@@ -418,10 +432,10 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
       BaseElement parentElement, Map<String, JsonNode> shapeMap) {
     
     for (JsonNode shapeNode : shapesArrayNode) {
-      BaseBpmnJsonConverter converter = convertersToBpmnMap.get(BpmnJsonConverterUtil.getStencilId(shapeNode));
+      Class<? extends BaseBpmnJsonConverter> converter = convertersToBpmnMap.get(BpmnJsonConverterUtil.getStencilId(shapeNode));
       if (converter != null) {
         try {
-          converter.convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap);
+          converter.newInstance().convertToBpmnModel(shapeNode, modelNode, this, parentElement, shapeMap);
         } catch (Exception e) {
           LOGGER.error("Error converting {}", BpmnJsonConverterUtil.getStencilId(shapeNode), e);
         }

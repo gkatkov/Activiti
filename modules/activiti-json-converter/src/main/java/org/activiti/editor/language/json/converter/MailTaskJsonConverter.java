@@ -29,13 +29,13 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class MailTaskJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, MailTaskJsonConverter> convertersToBpmnMap = new HashMap<String, MailTaskJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_TASK_MAIL, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_TASK_MAIL, MailTaskJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
     // will be handled by ServiceTaskJsonConverter
     return Collections.emptyMap();
   }

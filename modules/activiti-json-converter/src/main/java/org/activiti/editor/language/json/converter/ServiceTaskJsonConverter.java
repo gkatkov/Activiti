@@ -29,15 +29,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class ServiceTaskJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, ServiceTaskJsonConverter> convertersToBpmnMap = new HashMap<String, ServiceTaskJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_TASK_SERVICE, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_TASK_SERVICE, ServiceTaskJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, ServiceTaskJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, ServiceTaskJsonConverter>(1);
-    convertersToJsonMap.put(ServiceTask.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(ServiceTask.class, ServiceTaskJsonConverter.class);
     return convertersToJsonMap;
   }
   

@@ -29,15 +29,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class EventSubProcessJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, EventSubProcessJsonConverter> convertersToBpmnMap = new HashMap<String, EventSubProcessJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_EVENT_SUB_PROCESS, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_EVENT_SUB_PROCESS, EventSubProcessJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, EventSubProcessJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, EventSubProcessJsonConverter>(1);
-    convertersToJsonMap.put(EventSubProcess.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(EventSubProcess.class, EventSubProcessJsonConverter.class);
     return convertersToJsonMap;
   }
   

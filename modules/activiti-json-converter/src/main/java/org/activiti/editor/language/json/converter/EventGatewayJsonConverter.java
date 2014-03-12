@@ -26,15 +26,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class EventGatewayJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, EventGatewayJsonConverter> convertersToBpmnMap = new HashMap<String, EventGatewayJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_GATEWAY_EVENT, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_GATEWAY_EVENT, EventGatewayJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, EventGatewayJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, EventGatewayJsonConverter>(1);
-    convertersToJsonMap.put(EventGateway.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(EventGateway.class, EventGatewayJsonConverter.class);
     return convertersToJsonMap;
   }
   

@@ -30,15 +30,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class SequenceFlowJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, SequenceFlowJsonConverter> convertersToBpmnMap = new HashMap<String, SequenceFlowJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_SEQUENCE_FLOW, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_SEQUENCE_FLOW, SequenceFlowJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, SequenceFlowJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, SequenceFlowJsonConverter>(1);
-    convertersToJsonMap.put(SequenceFlow.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(SequenceFlow.class, SequenceFlowJsonConverter.class);
     return convertersToJsonMap;
   }
   

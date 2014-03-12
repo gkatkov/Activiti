@@ -202,9 +202,9 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
     }
   }
 
-  public abstract Map<? extends String, ? extends BaseBpmnJsonConverter> getJsonTypes();
+  public abstract Map<? extends String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes();
 
-  public abstract Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes();
+  public abstract Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes();
   
   protected abstract void convertElementToJson(ObjectNode propertiesNode, FlowElement flowElement);
   

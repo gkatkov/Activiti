@@ -2,6 +2,7 @@ package org.activiti.editor.language;
 
 import java.io.InputStream;
 
+import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.codehaus.jackson.JsonNode;

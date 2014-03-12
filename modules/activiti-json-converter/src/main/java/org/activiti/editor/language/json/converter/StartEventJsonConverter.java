@@ -32,19 +32,19 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class StartEventJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, StartEventJsonConverter> convertersToBpmnMap = new HashMap<String, StartEventJsonConverter>(5);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_NONE, this);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_TIMER, this);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_ERROR, this);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_MESSAGE, this);
-    convertersToBpmnMap.put(STENCIL_EVENT_START_SIGNAL, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(5);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_NONE, StartEventJsonConverter.class);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_TIMER, StartEventJsonConverter.class);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_ERROR, StartEventJsonConverter.class);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_MESSAGE, StartEventJsonConverter.class);
+    convertersToBpmnMap.put(STENCIL_EVENT_START_SIGNAL, StartEventJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, StartEventJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, StartEventJsonConverter>(1);
-    convertersToJsonMap.put(StartEvent.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(StartEvent.class, StartEventJsonConverter.class);
     return convertersToJsonMap;
   }
   

@@ -28,15 +28,15 @@ import org.codehaus.jackson.node.ObjectNode;
  */
 public class SubProcessJsonConverter extends BaseBpmnJsonConverter {
 
-  public Map<String, ? extends BaseBpmnJsonConverter> getJsonTypes() {
-    Map<String, SubProcessJsonConverter> convertersToBpmnMap = new HashMap<String, SubProcessJsonConverter>(1);
-    convertersToBpmnMap.put(STENCIL_SUB_PROCESS, this);
+  public Map<String, Class<? extends BaseBpmnJsonConverter>> getJsonTypes() {
+    Map<String, Class<? extends BaseBpmnJsonConverter>> convertersToBpmnMap = new HashMap<String, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToBpmnMap.put(STENCIL_SUB_PROCESS, SubProcessJsonConverter.class);
     return convertersToBpmnMap;
   }
 
-  public Map<Class<? extends BaseElement>, ? extends BaseBpmnJsonConverter> getBpmnTypes() {
-    Map<Class<? extends BaseElement>, SubProcessJsonConverter> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, SubProcessJsonConverter>(1);
-    convertersToJsonMap.put(SubProcess.class, this);
+  public Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> getBpmnTypes() {
+    Map<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>> convertersToJsonMap = new HashMap<Class<? extends BaseElement>, Class<? extends BaseBpmnJsonConverter>>(1);
+    convertersToJsonMap.put(SubProcess.class, SubProcessJsonConverter.class);
     return convertersToJsonMap;
   }
   
